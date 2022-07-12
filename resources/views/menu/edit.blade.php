@@ -27,7 +27,7 @@
                 <label for="image">L'image du Menu</label>
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="image" id="imaged" value="{{$menu->image}}"/>
+                    <input type="file" class="custom-file-input" name="image" id="imaged" />
                     <label class="custom-file-label" for="imaged">Modifier l'image</label>
                   </div>
                   <div class="input-group-append">

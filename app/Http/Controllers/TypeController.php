@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Type;
+use Illuminate\Support\Facades\Session;
+use View;
+
 
 class TypeController extends Controller
 {
@@ -13,7 +18,10 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        
+        return View::make('types.index')
+        ->with('types', $types);
     }
 
     /**
@@ -23,7 +31,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +42,20 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        $request->validate([
+            'name' => 'required|max:50',
+            
+        ]);
+
+        
+        $type = new Type;
+        $type->name = $request->input('name');
+        $type->save();
+
+        // redirect
+        Session::flash('message', 'Type Successfully created!');
+        return Redirect::to('/type');
     }
 
     /**
@@ -56,7 +77,11 @@ class TypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type= Type::find($id);
+        
+        // show the edit form and pass the shark
+        return View::make('types.edit')
+            ->with('type', $type);
     }
 
     /**
@@ -68,7 +93,11 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $type= Type::find($id);
+
+        $type->name = $request->input('name');
+        $type->save();
+        return Redirect::to('type/')->with('message', 'Type Successfully Updated!');
     }
 
     /**
@@ -79,6 +108,10 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Type::find($id);
+
+        $type->delete();            
+            Session::flash('message', 'Type Successfully deleted!');
+            return Redirect::to('type/');
     }
 }

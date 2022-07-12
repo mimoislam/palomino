@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
 use App\Models\Plat;
+use App\Models\Type;
 use Illuminate\Support\Facades\Session;
 use View;
 
@@ -29,8 +31,11 @@ class PlatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
-        //
+        $types = Type::all();
+
+        return View::make('plats.create')->with('types',$types);
     }
 
     /**
@@ -40,8 +45,31 @@ class PlatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+
+        
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:500',
+            'prix' => 'required|numeric',
+            'image' => 'mimes:jpeg,jpg,png|required|max:30000',
+        ]);
+       
+        $plat = new Plat;
+        $plat->name = $request->input('name');
+        $plat->description = $request->input('description');
+        $plat->price = $request->input('prix');
+
+        $imagename =time().'-'.$request->name.'.'.$request->image->extension();
+        
+        $request->image->move(public_path('images'),$imagename);
+        $plat->imagePath =$imagename;  
+        $plat->type_id = $request->input('type_id');
+        $plat->save();
+
+        // redirect
+        Session::flash('message', 'Plat Successfully created!');
+        return Redirect::to('/plat');
     }
 
     /**
@@ -52,7 +80,11 @@ class PlatController extends Controller
      */
     public function show($id)
     {
-        //
+        $plat= Plat::find($id);
+
+        // show the view and pass the shark to it
+        return View::make('plats.show')
+            ->with('plat', $plat);
     }
 
     /**
@@ -63,7 +95,12 @@ class PlatController extends Controller
      */
     public function edit($id)
     {
-        //
+        $types = Type::all();
+        $plat= Plat::find($id);
+        
+        // show the edit form and pass the shark
+        return View::make('plats.edit')
+            ->with('plat', $plat)->with('types',$types);
     }
 
     /**
@@ -75,7 +112,27 @@ class PlatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $plat= Plat::find($id);
+
+
+        $plat->name = $request->input('name');
+        $plat->description = $request->input('description');
+        $plat->price = $request->input('prix');
+        $plat->type_id = $request->input('type_id');
+
+
+        if($request->image){
+            $imagename =time().'-'.$request->name.'.'.$request->image->extension();
+        
+            $request->image->move(public_path('images'),$imagename);
+            $plat->image =$imagename; 
+        }
+       
+         
+
+        $plat->save();
+        return Redirect::to('plat/')->with('message', 'Plat Successfully Updated!');
     }
 
     /**
@@ -86,6 +143,15 @@ class PlatController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $plat = Plat::find($id);
+
+        if( File::exists(public_path('images'),$plat->imagePath) ) {
+            
+            File::delete(public_path('images'),$plat->imagePath);
+        }
+       
+        $plat->delete();            
+            Session::flash('message', 'Plat Successfully deleted!');
+            return Redirect::to('plat/');
     }
 }

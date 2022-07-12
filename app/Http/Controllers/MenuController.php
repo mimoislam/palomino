@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Menu;
@@ -48,7 +46,7 @@ class MenuController extends Controller
 
         $request->validate([
             'name' => 'required|max:255',
-            'image' => 'mimes:jpeg,jpg,png|required|max:300',
+            'image' => 'mimes:jpeg,jpg,png|required|max:30000',
         ]);
         $menu = new Menu;
         $menu->name = $request->input('name');
@@ -109,11 +107,15 @@ class MenuController extends Controller
 
         $menu->name = $request->input('name');
         
-        $imagename =time().'-'.$request->name.'.'.$request->image->extension();
+        if($request->image){
+           
+            $imagename =time().'-'.$request->name.'.'.$request->image->extension();
         
-        $request->image->move(public_path('images'),$imagename);
-        $menu->image =$imagename;  
-
+            $request->image->move(public_path('images'),$imagename);
+            $menu->image =$imagename;  
+    
+        }
+        
         $menu->save();
         return Redirect::to('menu/')->with('message', 'Menu Successfully Updated!');
      
@@ -130,10 +132,15 @@ class MenuController extends Controller
     {
 
         $menu = Menu::find($id);
+
+        if( File::exists(public_path('images'),$menu->image) ) {
+            
+            File::delete(public_path('images'),$menu->image);
+        }
         
         $menu->delete();            
             Session::flash('message', 'Menu Successfully deleted!');
             return Redirect::to('menu/');
-        //
+    
     }
 }

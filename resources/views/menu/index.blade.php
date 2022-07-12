@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
-                        <td><a href="{{asset('images/'.$value->image )}}"> <img width="50px" src="{{asset('images/'. $value->image )}}"></td>
+                        <td><a href="{{ URL::to('menu/' . $value->id) }}"> <img width="50px" src="{{asset('images/'. $value->image )}}"></td>
                         
         
                         

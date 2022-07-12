@@ -40,16 +40,24 @@
                   <p>Ajouter</p>
                 </a>
               </li>
+              
               <li class="nav-item ">
-                <a href="{{ route('menu.create') }}" class ="  nav-link ">
+                <a href="{{ route('plat.index') }}" class =" user-panel nav-link ">
                 
                   <p>Plats</p>
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="{{ route('plat.index') }}" class =" user-panel nav-link ">
+                <a href="{{ route('plat.create') }}" class ="  nav-link ">
                 
-                  <p>Plats</p>
+                  <p>Ajouter</p>
+                </a>
+              </li>
+
+              <li class="nav-item user-panel ">
+                <a href="{{ route('menu.create') }}" class ="  nav-link ">
+                
+                  <p>Types</p>
                 </a>
               </li>
               <li class="nav-item ">
