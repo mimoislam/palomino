@@ -16,13 +16,13 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         $menus = Menu::all();
-        
+
      return View::make('menu.index')
      ->with('menus', $menus);
 
-    
+
     }
 
     /**
@@ -51,9 +51,9 @@ class MenuController extends Controller
         $menu = new Menu;
         $menu->name = $request->input('name');
         $imagename =time().'-'.$request->name.'.'.$request->image->extension();
-        
+
         $request->image->move(public_path('images'),$imagename);
-        $menu->image =$imagename;  
+        $menu->image =$imagename;
         $menu->save();
 
         // redirect
@@ -85,7 +85,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu= Menu::find($id);
-        
+
         // show the edit form and pass the shark
         return View::make('menu.edit')
             ->with('menu', $menu);
@@ -101,25 +101,25 @@ class MenuController extends Controller
     public function update(Request $request, $id)
 
     {
-    
+
         $menu= Menu::find($id);
 
 
         $menu->name = $request->input('name');
-        
+
         if($request->image){
-           
+
             $imagename =time().'-'.$request->name.'.'.$request->image->extension();
-        
+
             $request->image->move(public_path('images'),$imagename);
-            $menu->image =$imagename;  
-    
+            $menu->image =$imagename;
+
         }
-        
+
         $menu->save();
         return Redirect::to('menu/')->with('message', 'Menu Successfully Updated!');
-     
-    
+
+
     }
 
     /**
@@ -134,13 +134,13 @@ class MenuController extends Controller
         $menu = Menu::find($id);
 
         if( File::exists(public_path('images'),$menu->image) ) {
-            
+
             File::delete(public_path('images'),$menu->image);
         }
-        
-        $menu->delete();            
+
+        $menu->delete();
             Session::flash('message', 'Menu Successfully deleted!');
             return Redirect::to('menu/');
-    
+
     }
 }

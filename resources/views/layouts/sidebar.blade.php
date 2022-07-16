@@ -1,11 +1,11 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    
+
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-center">
-       
-        
+
+
         @if (Route::has('login'))
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
@@ -29,47 +29,47 @@
             <ul class="nav nav-treeview">
               <li class="nav-item ">
                 <a href="{{ route('menu.index') }}" class= "user-panel nav-link">
-                
+
                   <p>Menu</p>
- 
+
                 </a>
               </li>
               <li class="nav-item ">
                 <a href="{{ route('menu.create') }}" class ="  nav-link ">
-                
+
                   <p>Ajouter</p>
                 </a>
               </li>
-              
+
               <li class="nav-item ">
                 <a href="{{ route('plat.index') }}" class =" user-panel nav-link ">
-                
+
                   <p>Plats</p>
                 </a>
               </li>
               <li class="nav-item ">
                 <a href="{{ route('plat.create') }}" class ="  nav-link ">
-                
+
                   <p>Ajouter</p>
                 </a>
               </li>
 
               <li class="nav-item user-panel ">
-                <a href="{{ route('menu.create') }}" class ="  nav-link ">
-                
+                <a href="{{ route('type.index') }}" class ="  nav-link ">
+
                   <p>Types</p>
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="{{ route('plat.create') }}" class ="  nav-link ">
-                
+                <a href="{{ route('type.create') }}" class ="  nav-link ">
+
                   <p>Ajouter</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
-        
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

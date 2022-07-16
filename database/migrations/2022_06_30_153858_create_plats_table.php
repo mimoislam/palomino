@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('description');
             $table->double('price');
             $table->bigInteger('type_id');
+            $table->bigInteger("menu_id");
+
             $table->timestamps();
         });
     }

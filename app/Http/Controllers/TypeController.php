@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Type;
@@ -19,7 +20,7 @@ class TypeController extends Controller
     public function index()
     {
         $types = Type::all();
-        
+
         return View::make('types.index')
         ->with('types', $types);
     }
@@ -31,7 +32,11 @@ class TypeController extends Controller
      */
     public function create()
     {
-        
+        $menus = Menu::all();
+
+        return View::make('types.create')->with([
+            'menus'=>$menus
+        ]);
     }
 
     /**
@@ -42,15 +47,17 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $request->validate([
             'name' => 'required|max:50',
-            
+            'menu_id' => 'required',
+
         ]);
 
-        
+
         $type = new Type;
         $type->name = $request->input('name');
+        $type->menu_id = $request->input('menu_id');
         $type->save();
 
         // redirect
@@ -78,7 +85,7 @@ class TypeController extends Controller
     public function edit($id)
     {
         $type= Type::find($id);
-        
+
         // show the edit form and pass the shark
         return View::make('types.edit')
             ->with('type', $type);
@@ -110,7 +117,7 @@ class TypeController extends Controller
     {
         $type = Type::find($id);
 
-        $type->delete();            
+        $type->delete();
             Session::flash('message', 'Type Successfully deleted!');
             return Redirect::to('type/');
     }

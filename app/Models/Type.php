@@ -9,8 +9,8 @@ class Type extends Model
 {
     use HasFactory;
 
-    public function menus(){
-        return $this->belongsToMany(Plat::class);
+    public function menu(){
+        return $this->belongsTo(Menu::class);
     }
 
     public function plats(){

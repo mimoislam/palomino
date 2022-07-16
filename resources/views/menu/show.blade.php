@@ -15,17 +15,17 @@
           </h3>
         </div>
             <div class="card-body align-items-center">
-            
+
                     <img  src="{{asset('images/'. $menu->image )}}">
 
-                
+
           </div>
           <div class="card-footer">
             Menu Ajouté le {{$menu->created_at}}
           </div>
 </div>
     </div>
-    
+
 
 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
@@ -9,6 +10,7 @@ use App\Models\Plat;
 use App\Models\Type;
 use Illuminate\Support\Facades\Session;
 use View;
+use Yajra\DataTables\DataTables;
 
 class PlatController extends Controller
 {
@@ -17,12 +19,29 @@ class PlatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $plats = Plat::all();
-        
+        $menus = Menu::all();
+
+        if ($request->ajax()) {
+            $data = User::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
      return View::make('plats.index')
-     ->with('plats', $plats);
+     ->with([
+         'plats'=> $plats,
+         'menus'=>$menus
+     ]);
     }
 
     /**
@@ -34,8 +53,12 @@ class PlatController extends Controller
 
     {
         $types = Type::all();
+        $menus = Menu::all();
 
-        return View::make('plats.create')->with('types',$types);
+        return View::make('plats.create')->with([
+            'types'=>$types,
+            'menus'=>$menus
+        ]);
     }
 
     /**
@@ -45,25 +68,27 @@ class PlatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
 
-        
+
         $request->validate([
             'name' => 'required|max:255',
             'description' => 'required|max:500',
             'prix' => 'required|numeric',
             'image' => 'mimes:jpeg,jpg,png|required|max:30000',
+            'menu_id' => 'required',
         ]);
-       
+
         $plat = new Plat;
         $plat->name = $request->input('name');
         $plat->description = $request->input('description');
         $plat->price = $request->input('prix');
+        $plat->menu_id = $request->input('menu_id');
 
         $imagename =time().'-'.$request->name.'.'.$request->image->extension();
-        
+
         $request->image->move(public_path('images'),$imagename);
-        $plat->imagePath =$imagename;  
+        $plat->imagePath =$imagename;
         $plat->type_id = $request->input('type_id');
         $plat->save();
 
@@ -97,7 +122,7 @@ class PlatController extends Controller
     {
         $types = Type::all();
         $plat= Plat::find($id);
-        
+
         // show the edit form and pass the shark
         return View::make('plats.edit')
             ->with('plat', $plat)->with('types',$types);
@@ -112,7 +137,7 @@ class PlatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $plat= Plat::find($id);
 
 
@@ -124,12 +149,12 @@ class PlatController extends Controller
 
         if($request->image){
             $imagename =time().'-'.$request->name.'.'.$request->image->extension();
-        
+
             $request->image->move(public_path('images'),$imagename);
-            $plat->image =$imagename; 
+            $plat->image =$imagename;
         }
-       
-         
+
+
 
         $plat->save();
         return Redirect::to('plat/')->with('message', 'Plat Successfully Updated!');
@@ -146,11 +171,11 @@ class PlatController extends Controller
         $plat = Plat::find($id);
 
         if( File::exists(public_path('images'),$plat->imagePath) ) {
-            
+
             File::delete(public_path('images'),$plat->imagePath);
         }
-       
-        $plat->delete();            
+
+        $plat->delete();
             Session::flash('message', 'Plat Successfully deleted!');
             return Redirect::to('plat/');
     }

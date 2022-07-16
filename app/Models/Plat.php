@@ -9,13 +9,13 @@ class Plat extends Model
 {
     use HasFactory;
 
-    public function menus(){
-        return $this->belongsToMany(Menu::class);
+    public function menu(){
+        return $this->belongsTo(Menu::class);
     }
 
     public function type(){
         return $this->belongsTo(Type::class);
     }
 
-    
+
 }
