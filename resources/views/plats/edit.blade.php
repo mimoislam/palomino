@@ -10,8 +10,15 @@
       <div class="wrapper">
           <div class="content-wrapper p-5">
       
-          <h1>Modifier le Plat<em>"{{$plat->name}}"</em></h1>
-      
+         
+         
+            
+            <div class="d-flex justify-content-start mb-3">
+              <a href="{{route('plat.index')}} "class="btn btn-small btn-info ml-3 mt-2 mb-3 mr-3" ><i class="fa-solid fa-angle-left"></i></a>
+              <h1>Modifier le Plat<em>"{{$plat->name}}"</em></h1>
+          
+            
+            </div>  
     
          
           <form method="POST" action="{{route("plat.update",$plat->id)}}" enctype="multipart/form-data">

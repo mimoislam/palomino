@@ -8,9 +8,19 @@
     <div class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
 
-          <div class="content-wrapper p-5">
 
-            <h1 >Plats</h1>
+          <div class="content-wrapper p-5">
+            <div class="d-flex justify-content-end">
+
+              <a href="{{ route('plat.trash') }}" class="  btn btn-small btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+
+            </div>
+            <div class="d-flex justify-content-start mb-3">
+              <h1 >Plats</h1>
+              <a href="{{ route('plat.create') }}" class ="ml-3   mb-3 mt-2 btn btn-small btn-success text-center"><i class="fa-solid fa-plus"></i></a>
+
+            </div>
+            <hr>
 
             <!-- will be used to show any messages -->
             @if (Session::has('message'))
@@ -51,24 +61,52 @@
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->description }}</td>
                         <td>{{ $value->price }}</td>
+<<<<<<< HEAD
                         <td>  <a class="btn btn-small btn-info mr-1" href="{{ URL::to('menu/' . $value->menu->id ) }}">{{ $value->menu->name }}</a></td>
                         <td>{{ $value->type->name }}</td>
 
 
+=======
+                        <td>
+                          @if($value->type)
+                          {{ $value->type->name }}
+                          @else
+                            <p>---</p>
+                          @endif
+                        </td>
+
+
+>>>>>>> bad154a6b6e48d0372962c21f818a7175c0d8fa3
                         <td>
 
 
                            <div class="d-flex align-items-start">
+<<<<<<< HEAD
                             <a class="btn btn-small btn-success mr-1" href="{{ URL::to('plat/' . $value->id) }}">Show</a>
 
 
                             <a class="btn btn-small btn-info mr-1" href="{{ URL::to('plat/' . $value->id . '/edit') }}">Edit</a>
+=======
+                            <a class="btn btn-small btn-success mr-1" href="{{ URL::to('plat/' . $value->id) }}"><i class="fa-solid fa-angle-right"></i></a>
+
+
+                            <a class="btn btn-small btn-info mr-5" href="{{ URL::to('plat/' . $value->id . '/edit') }}"><i class="fa-solid fa-pen"></i></a>
+
+>>>>>>> bad154a6b6e48d0372962c21f818a7175c0d8fa3
                             <form  action="/plat/{{$value->id}}" method="POST">
                               @csrf
                               @method('delete')
+<<<<<<< HEAD
                               <button type="submit" class=" mr-1 btn btn-small btn-danger"> Remove</button>
 
                             </form>
+=======
+                              <button type="submit" class=" mr-1 btn btn-small btn-danger"> <i class="fa-solid fa-trash-can"></i>
+
+                              </button>
+
+                            </form>
+>>>>>>> bad154a6b6e48d0372962c21f818a7175c0d8fa3
                            </div>
                         </td>
 

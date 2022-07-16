@@ -62,7 +62,6 @@
               </li>
               <li class="nav-item ">
                 <a href="{{ route('type.create') }}" class ="  nav-link ">
-
                   <p>Ajouter</p>
                 </a>
               </li>

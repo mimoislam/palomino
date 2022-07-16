@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
 use View;
 
 class MenuController extends Controller
@@ -141,6 +142,32 @@ class MenuController extends Controller
         $menu->delete();
             Session::flash('message', 'Menu Successfully deleted!');
             return Redirect::to('menu/');
+
+    }
+
+    public function trash(){
+
+        $trash = Menu::onlyTrashed()->get();
+        return View::make('menu.trash')
+        ->with('trash', $trash);
+
+    }
+
+    public function restore($id){
+
+        Menu::withTrashed()->where('id',$id)->restore();
+
+        return back()->with('message', 'Menu Successfully restored!');
+
+
+    }
+
+    public function forcedelete($id){
+
+        Menu::withTrashed()->where('id',$id)->forceDelete();
+
+        return back()->with('message', 'Menu Successfully deleted!');
+
 
     }
 }
