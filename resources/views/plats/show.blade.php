@@ -32,7 +32,11 @@
           <h3 class="ml-3">Type</h3>
           
           <p class="ml-5">
-                    {{$plat->type->name}} </p>
+            @if($plat->type)
+            {{ $plat->type->name }}
+            @else
+             --- 
+            @endif         </p>
          
           <hr> 
           <div class="card-footer">

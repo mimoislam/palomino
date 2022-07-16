@@ -49,7 +49,13 @@
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->description }}</td>
                         <td>{{ $value->price }}</td>
-                        <td>{{ $value->type->name }}</td>
+                        <td>
+                          @if($value->type)
+                          {{ $value->type->name }}
+                          @else
+                            <p>---</p>
+                          @endif                        
+                        </td>
         
                         
                         <td>

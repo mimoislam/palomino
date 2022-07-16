@@ -114,4 +114,31 @@ class TypeController extends Controller
             Session::flash('message', 'Type Successfully deleted!');
             return Redirect::to('type/');
     }
+
+
+    public function trash(){
+        
+        $trash = Type::onlyTrashed()->get();
+        return View::make('types.trash')
+        ->with('trash', $trash);
+       
+    }
+
+    public function restore($id){
+        
+        Type::withTrashed()->where('id',$id)->restore();
+       
+        return back()->with('message', 'Type Successfully restored!');
+      
+       
+    }
+
+    public function forcedelete($id){
+        
+        Type::withTrashed()->where('id',$id)->forceDelete();
+       
+        return back()->with('message', 'Type Successfully deleted!');
+      
+       
+    }
 }
