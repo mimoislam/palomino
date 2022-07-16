@@ -7,17 +7,12 @@
 
     <div class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
-
         
           <div class="content-wrapper p-5">
-            <div class="d-flex justify-content-end">
-             
-              <a href="{{ route('plat.trash') }}" class="  btn btn-small btn-danger"><i class="fa-solid fa-trash-can"></i></a>
-            
-            </div>  
             <div class="d-flex justify-content-start mb-3">
-              <h1 >Plats</h1>
-              <a href="{{ route('plat.create') }}" class ="ml-3   mb-3 mt-2 btn btn-small btn-success text-center"><i class="fa-solid fa-plus"></i></a>
+                <a href="{{route('plat.index')}} "class="btn btn-small btn-info ml-3 mt-2 mb-3 mr-3" ><i class="fa-solid fa-angle-left"></i></a>
+              
+                <h1 >Trash</h1>
             
             </div>  
             <hr>
@@ -29,6 +24,7 @@
         
             <!-- /.card-header -->
             <div class="card-body p-0">
+                @if($trash->isNotEmpty())
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -41,7 +37,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($plats as $key => $value)
+                    @foreach($trash as $key => $value)
                     <tr>
                         <td>{{ $value->id }}</td>
                       
@@ -56,15 +52,14 @@
         
                            
                            <div class="d-flex align-items-start">
-                            <a class="btn btn-small btn-success mr-1" href="{{ URL::to('plat/' . $value->id) }}"><i class="fa-solid fa-angle-right"></i></a>
+                            <a class="btn btn-small btn-success mr-1" href="{{ URL::to('plat/trash/' . $value->id) }}"><i class="fa-solid fa-trash-arrow-up"></i></a>
         
                            
-                            <a class="btn btn-small btn-info mr-5" href="{{ URL::to('plat/' . $value->id . '/edit') }}"><i class="fa-solid fa-pen"></i></a>
                             
-                            <form  action="/plat/{{$value->id}}" method="POST">
+                            <form  action="/plat/trash/{{$value->id}}" method="POST">
                               @csrf 
                               @method('delete')
-                              <button type="submit" class=" mr-1 btn btn-small btn-danger"> <i class="fa-solid fa-trash-can"></i>
+                              <button type="submit" class=" mr-1 btn btn-small btn-danger"><i class="fa-solid fa-ban"></i>
 
                               </button>
                               
@@ -76,6 +71,13 @@
                 @endforeach
                   </tbody>
                 </table>
+                @else
+                <div class="text-center">
+                    
+                    <h3>Vide</h3>
+                </div>
+                @endif
+
               </div>
               <!-- /.card-body -->
           </div>

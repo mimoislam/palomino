@@ -154,4 +154,30 @@ class PlatController extends Controller
             Session::flash('message', 'Plat Successfully deleted!');
             return Redirect::to('plat/');
     }
+
+    public function trash(){
+        
+        $trash = Plat::onlyTrashed()->get();
+        return View::make('plats.trash')
+        ->with('trash', $trash);
+       
+    }
+
+    public function restore($id){
+        
+        Plat::withTrashed()->where('id',$id)->restore();
+       
+        return back()->with('message', 'Plat Successfully restored!');
+      
+       
+    }
+
+    public function forcedelete($id){
+        
+        Plat::withTrashed()->where('id',$id)->forceDelete();
+       
+        return back()->with('message', 'Plat Successfully deleted!');
+      
+       
+    }
 }

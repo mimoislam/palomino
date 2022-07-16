@@ -11,6 +11,7 @@
     <div class="card card-outline card-info">
         <div class="card-header">
           <h3 class="card-title">
+            <a href="{{ route('menu.index') }}" class ="btn btn-small btn-info mr-3"><i class="fa-solid fa-angle-left"></i></a>
             {{$menu->name}}
           </h3>
         </div>

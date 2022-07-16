@@ -55,13 +55,13 @@
               </li>
 
               <li class="nav-item user-panel ">
-                <a href="{{ route('menu.create') }}" class ="  nav-link ">
+                <a href="{{ route('type.index') }}" class ="  nav-link ">
                 
                   <p>Types</p>
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="{{ route('plat.create') }}" class ="  nav-link ">
+                <a href="{{ route('type.create') }}" class ="  nav-link ">
                 
                   <p>Ajouter</p>
                 </a>

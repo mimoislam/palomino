@@ -51,11 +51,11 @@
         
                            
                            <div class="d-flex align-items-start">                      
-                            <a class="btn btn-small btn-info mr-1" href="{{ URL::to('type/' . $value->id . '/edit') }}">Edit</a>
+                            <a class="btn btn-small btn-info mr-1" href="{{ URL::to('type/' . $value->id . '/edit') }}"><i class="fa-solid fa-pen"></i></a>
                             <form  action="/type/{{$value->id}}" method="POST">
                               @csrf
                               @method('delete')
-                              <button type="submit" class=" mr-1 btn btn-small btn-danger"> Remove</button>
+                              <button type="submit" class=" ml-5 btn btn-small btn-danger"> <i class="fa-solid fa-trash-can"></i></button>
                               
                             </form> 
                            </div>

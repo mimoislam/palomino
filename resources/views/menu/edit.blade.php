@@ -10,8 +10,14 @@
       <div class="wrapper">
           <div class="content-wrapper p-5">
       
-          <h1>Modifier le Menu <em>"{{$menu->name}}"</em></h1>
+         
       
+          <div class="d-flex justify-content-start mb-3">
+            
+            <a href="{{ route('menu.index') }}" class ="ml-3 mr-3    mb-3 mt-2 btn btn-small btn-info text-center"><i class="fa-solid fa-angle-left"></i></a>
+            <h1>Modifier le Menu <em>"{{$menu->name}}"</em></h1>
+          </div>  
+          <hr>
     
          
           <form method="POST" action="{{route("menu.update",$menu->id)}}" enctype="multipart/form-data">
